@@ -28,7 +28,7 @@ import Gear
 import Graphics.Rendering.OpenGL
 import Graphics.UI.GLUT as GLUT
 import Data.IORef
-import Time
+import System.Time (getClockTime, tdPicosec, tdSec, tdMin, tdHour, tdDay, diffClockTimes, ClockTime(..))
 
 -- gears setup
 -- gear teeth count is 11,20,9 to show, that Gear.hs toolbox is well parametrized.
@@ -76,7 +76,7 @@ main = do
   gst <- newIORef $ GearState time 1 0 0
   (progName,_) <-  getArgsAndInitialize
   initialDisplayMode $= [RGBMode, WithDepthBuffer,DoubleBuffered]
-  createWindow progName
+  _ <- createWindow progName
   normalize          $= Enabled
   -- lighting
   lighting           $= Enabled
@@ -160,5 +160,4 @@ keyboardRot gst (Char 'r') = do
   gState <- get gst
   gst $= gState { gsDirection = (gsDirection gState) * (-1) }
 
-keyboardRot gst _ = return ()
-
+keyboardRot _gst _ = return ()
